@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
-const BASE = 'https://localhost:5001/api'; // adjust if using https
-
+const BASE = environment.baseUrl+ '/api'; // adjust if using https
 export interface TariffInput {
   countryOfOrigin: string;
   htsCode: string;
@@ -38,7 +38,6 @@ export interface TariffResult {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor(private http: HttpClient) {}
-
   calculate(input: TariffInput): Observable<TariffResult> {
     return this.http.post<TariffResult>(`${BASE}/tariff/calculate`, input);
   }
