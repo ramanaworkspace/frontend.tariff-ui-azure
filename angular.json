@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "testapprun": {
+    "tariffcalcullation": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/testapprun",
+            "outputPath": "dist/tariffcalcullation",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "testapprun:build:production"
+              "buildTarget": "tariffcalcullation:build:production"
             },
             "development": {
-              "buildTarget": "testapprun:build:development"
+              "buildTarget": "tariffcalcullation:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "testapprun:build"
+            "buildTarget": "tariffcalcullation:build"
           }
         },
         "test": {
