@@ -22,7 +22,7 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # Build Tariff-Calculation-UI
       - name: Build Tariff-Calculation-UI
