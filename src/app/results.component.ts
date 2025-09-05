@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component,PLATFORM_ID,Inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TariffResult } from './api.service';
 
 @Component({
@@ -48,8 +48,12 @@ import { TariffResult } from './api.service';
 export class ResultsComponent {
   result: TariffResult | null = null;
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngOnInit(){
-    const json = sessionStorage.getItem('result');
+    if (isPlatformBrowser(this.platformId)) {
+     const json = sessionStorage.getItem('result');
     if(json) this.result = JSON.parse(json);
+  }
   }
 }
