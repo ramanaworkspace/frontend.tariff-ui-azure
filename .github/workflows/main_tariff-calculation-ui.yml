@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'Tariff-Calculation-UI'
           slot-name: 'Production'
-          package: Tariff-Calculation-UI
+          package: dist/Tariff-Calculation-UI
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1477BFBD1301490DBB7DA960E949B39A }}
