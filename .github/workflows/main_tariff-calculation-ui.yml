@@ -1,36 +1,34 @@
 name: Build and deploy Angular app to Azure Web App - Tariff-Calculation-UI
-
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
+  
+env:
+  AZURE_WEBAPP_NAME: ${{secrets.AZURE_WEBAPP_NAME}} # Replace with your Azure Web App name
+  BUILD_DIRECTORY: 'dist/${{secrets.APP_NAME}}' # The output folder after 'ng build'
+  
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Angular app
-        run: npm run build --if-present
-
+      - name: npm install, build
+        run: |
+          npm install
+          npm run build --if-present
       - name: Zip Angular dist folder
-        run: cd dist/Tariff-Calculation-UI && zip -r ../../release.zip .
-
+        run: cd dist && zip -r release.zip ${{ env.BUILD_DIRECTORY }}
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: angular-app
-          path: release.zip   # ✅ upload from project root
+          path: dist/release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,14 +38,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: angular-app
-
       - name: Unzip artifact
-        run: unzip release.zip -d ./site  # ✅ extract into ./site
-
+        run: unzip release.zip
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Tariff-Calculation-UI'
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: 'Production'
-          package: ./site                  # ✅ deploy correct folder
+          package: './release.zip' # Deploy the created zip file
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1477BFBD1301490DBB7DA960E949B39A }}
