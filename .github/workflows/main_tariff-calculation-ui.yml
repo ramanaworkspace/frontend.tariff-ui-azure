@@ -1,51 +1,55 @@
-name: Build and Deploy Angular to Azure WebApp
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Node.js app to Azure Web App - tariff-calculation-ui
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: read #This is required for actions/checkout
 
     steps:
-      # Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '20.x'
 
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Build Tariff-Calculation-UI
-      - name: Build Tariff-Calculation-UI
-        run: npm run build --prod
-
-      # Zip the build output
-      - name: Zip artifact for deployment
+      - name: npm install, build, and test
         run: |
-          cd dist
-          zip -r ../Tariff-Calculation-UI.zip Tariff-Calculation-UI
-          cd ..
-
-      # Upload build artifact (optional, for debugging/download)
-      - name: Upload artifact
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+      
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: Tariff-Calculation-UI
-          path: Tariff-Calculation-UI.zip
+          name: node-app
+          path: .
 
-      # Deploy to Azure WebApp
-      - name: Deploy to Azure WebApp
-        uses: azure/webapps-deploy@v2
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
         with:
-          app-name: "Tariff-Calculation-UI"   # Replace with your Azure WebApp name
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: Tariff-Calculation-UI.zip
+          name: node-app
+      
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp
+        with:
+          app-name: 'tariff-calculation-ui'
+          slot-name: 'Production'
+          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF2576EEA46947FCA432260539829A40 }}
