@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'Tariff-Calculation-UI' title`, () => {
+  it(`should have the 'tariff-calculation-ui' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect('new').toEqual('Tariff-Calculation-UI');
+    expect('new').toEqual('tariff-calculation-ui');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Tariff-Calculation-UI');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, tariff-calculation-ui');
   });
 });
