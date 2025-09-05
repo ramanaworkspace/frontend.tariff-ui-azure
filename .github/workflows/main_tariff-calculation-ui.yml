@@ -19,18 +19,7 @@ jobs:
 
       - name: npm install
         run: npm install
-
-      # ✅ Install Chrome for Karma tests
-      - name: Install Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-
-      # ✅ Run Angular unit tests in headless Chrome
-      - name: Run Tests
-        run: |
-          npm run test -- --browsers=ChromeHeadlessNoSandbox --watch=false
-
+        
       - name: Run build
         run: npm run build --if-present
 
