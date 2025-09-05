@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "tariffcalcullation": {
+    "Tariff-Calculation-UI": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/tariffcalcullation",
+            "outputPath": "dist/Tariff-Calculation-UI",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "tariffcalcullation:build:production"
+              "buildTarget": "Tariff-Calculation-UI:build:production"
             },
             "development": {
-              "buildTarget": "tariffcalcullation:build:development"
+              "buildTarget": "Tariff-Calculation-UI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "tariffcalcullation:build"
+            "buildTarget": "Tariff-Calculation-UI:build"
           }
         },
         "test": {
