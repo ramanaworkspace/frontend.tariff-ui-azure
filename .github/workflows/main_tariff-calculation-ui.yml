@@ -24,7 +24,7 @@ jobs:
         run: npm run build --if-present
 
       - name: Zip Angular dist folder
-        run: cd dist && zip -r release.zip Tariff-Calculation-UI
+        run: cd dist/Tariff-Calculation-UI && zip -r ../../release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
