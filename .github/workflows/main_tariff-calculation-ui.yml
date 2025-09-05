@@ -42,12 +42,12 @@ jobs:
           name: angular-app
 
       - name: Unzip artifact
-        run: unzip release.zip
+        run: unzip dist/release.zip
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'Tariff-Calculation-UI'
           slot-name: 'Production'
-          package: Tariff-Calculation-UI
+          package: dist/Tariff-Calculation-UI
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1477BFBD1301490DBB7DA960E949B39A }}
