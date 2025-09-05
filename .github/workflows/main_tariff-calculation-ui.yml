@@ -7,7 +7,7 @@ on:
   
 env:
   AZURE_WEBAPP_NAME: ${{secrets.AZURE_WEBAPP_NAME}} # Replace with your Azure Web App name
-  BUILD_DIRECTORY: 'dist/${{secrets.APP_NAME}}' # The output folder after 'ng build'
+  BUILD_DIRECTORY: 'dist/testapprun/browser' # The output folder after 'ng build'
   
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
           npm install
           npm run build --if-present
       - name: Zip Angular dist folder
-        run: cd dist && zip -r release.zip ${{ env.BUILD_DIRECTORY }}
+        run: zip -r release.zip ${{ env.BUILD_DIRECTORY }}
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
