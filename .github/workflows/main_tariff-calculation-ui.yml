@@ -24,7 +24,7 @@ jobs:
           mkdir release
           cp package*.json release/
           cp -r dist/tariff-calculation-ui release/dist
-          npm ci --omit=dev --prefix release
+          npm install --omit=dev --prefix release
           cd release && zip -r ../release.zip .
 
       - uses: actions/upload-artifact@v4
