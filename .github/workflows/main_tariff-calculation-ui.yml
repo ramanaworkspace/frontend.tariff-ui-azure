@@ -23,7 +23,7 @@ jobs:
         run: |
           mkdir release
           cp package*.json release/
-          cp -r dist release/dist
+          cp -r dist/tariff-calculation-ui release/dist
           npm install --production --prefix release
           cd release && zip -r ../release.zip .
 
