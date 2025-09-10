@@ -1,4 +1,4 @@
-name: Build and deploy Angular app to Azure Web App - tariff-calculation-ui
+name: Build and deploy Angular SSR app to Azure Web App - tariff-calculation-ui
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - run: npm install
+      - run: npm ci
       - run: npm run build:ssr
 
       - name: Prepare package
@@ -24,7 +24,7 @@ jobs:
           mkdir release
           cp package*.json release/
           cp -r dist/tariff-calculation-ui release/dist
-          npm install --production --prefix release
+          npm ci --omit=dev --prefix release
           cd release && zip -r ../release.zip .
 
       - uses: actions/upload-artifact@v4
@@ -41,8 +41,12 @@ jobs:
           name: release
 
       - name: Deploy to Azure
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: tariff-calculation-ui
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: release.zip
+
+      - name: Show deployed URL
+        run: echo "Deployed at ${{ steps.deploy-to-webapp.outputs.webapp-url }}"
