@@ -2,7 +2,7 @@
   "name": "tariff-calculation-ui",
   "version": "0.0.0",
 "scripts": {
-  "build:ssr": "ng build && ng run tariff-calculation-ui:server",
+  "build:ssr": "ng build --configuration=production",
   "serve:ssr": "node dist/tariff-calculation-ui/server/main.js",
   "start": "npm run serve:ssr"
 },
