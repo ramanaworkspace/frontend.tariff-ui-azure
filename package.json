@@ -5,7 +5,6 @@
   "ng": "ng",
   "start": "ng serve",
   "build": "ng build",
-  "build:ssr": "ng build --configuration production && ng run tariff-calculation-ui:server:production",
   "serve:ssr": "node dist/tariff-calculation-ui/server/main.js"
 },
   "private": true,

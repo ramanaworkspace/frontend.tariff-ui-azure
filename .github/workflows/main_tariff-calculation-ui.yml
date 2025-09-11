@@ -16,20 +16,18 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - run: npm install
-      - run: npm run build:ssr
-
-      - name: Prepare package
+      - name: npm install, build
         run: |
-          mkdir release
-          cp package*.json release/
-          cp -r dist/tariff-calculation-ui release/dist
-          npm install --omit=dev --prefix release
-          cd release && zip -r ../release.zip .
+          npm install
+          npm run build --if-present
+          
+      - name: Zip artifact
+        run: zip release.zip ./* -r 
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
         with:
-          name: release
+          name: tariff-calculation-ui
           path: release.zip
 
   deploy:
@@ -38,15 +36,15 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: release
+          name: tariff-calculation-ui
+
+      - name: unzip artifacts
+        run: unzip release.zip
 
       - name: Deploy to Azure
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: tariff-calculation-ui
+          app-name: tariffcalculation
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: release.zip
-
-      - name: Show deployed URL
-        run: echo "Deployed at ${{ steps.deploy-to-webapp.outputs.webapp-url }}"
