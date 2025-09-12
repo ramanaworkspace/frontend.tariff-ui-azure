@@ -14,7 +14,9 @@ import { ApiService, TariffInput } from './api.service';
     <form (ngSubmit)="onSubmit()">
       <div class="row">
         <label>Country of Origin</label>
-        <input [(ngModel)]="model.countryOfOrigin" name="country" required />
+        <select [(ngModel)]="model.countryOfOrigin" name="country" required>
+          <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+        </select>
       </div>
       <div class="row">
         <label>HTS Code</label>
@@ -49,6 +51,7 @@ import { ApiService, TariffInput } from './api.service';
   styles: [`
     .row{ display:flex; gap:12px; margin:8px 0; align-items:center }
     .row>label{ width:220px }
+    .row>select{ flex:1; padding:6px 8px }
     input{ flex:1; padding:6px 8px }
     button{ margin-right:12px }
   `]
@@ -83,4 +86,9 @@ export class TariffFormComponent {
       window.URL.revokeObjectURL(url);
     });
   }
+
+  countries: string[] = [
+  'India',
+  'China'
+];
 }
