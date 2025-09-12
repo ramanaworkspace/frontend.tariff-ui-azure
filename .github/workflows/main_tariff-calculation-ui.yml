@@ -21,10 +21,10 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
-      - name: Install dependencies & build SSR
+      - name: Install dependencies
         run: |
           npm ci
-          npm run build:ssr
+          npm run build
 
       - name: Prepare artifact
         run: |
